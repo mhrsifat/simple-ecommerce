@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Services\FileUploadService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,7 +21,7 @@ class ProductController extends Controller
     /**
      * Display a listing of products.
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
         $products = Product::with([
             'category:id,name,slug',

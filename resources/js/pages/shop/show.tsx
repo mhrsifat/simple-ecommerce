@@ -1,19 +1,11 @@
-import { Head, Link, usePage } from '@inertiajs/react';
-import {
-    ArrowLeft,
-    ChevronRight,
-    Edit3,
-    PackageCheck,
-    ShieldCheck,
-    Truck,
-} from 'lucide-react';
-import ProductCard from '@/components/product-card';
-import ShopLayout from '@/layouts/shop-layout';
-import { Button } from '@/components/ui/button';
-import type { Product } from '@/types';
-import { Minus, Plus } from 'lucide-react';
+import { Head, Link } from '@inertiajs/react';
+import { ChevronRight, PackageCheck, ShieldCheck, Truck } from 'lucide-react';
 import { useState } from 'react';
+import ProductCard from '@/components/product-card';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import ShopLayout from '@/layouts/shop-layout';
+import type { Product } from '@/types';
 
 type ShopShowProps = {
     product: Product;
@@ -88,7 +80,6 @@ export default function ShopShow({ product, relatedProducts }: ShopShowProps) {
 
                     {/* Right: Product Details & Purchase Actions */}
                     <div className="flex flex-col lg:col-span-6">
-
                         {/* Product Title */}
                         <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
                             {product.name}
@@ -134,18 +125,22 @@ export default function ShopShow({ product, relatedProducts }: ShopShowProps) {
 
                         {/*inactive buy now button with quantity box*/}
                         <div className="mt-8 flex flex-wrap items-center gap-4">
-                            <div className="inline-flex h-11 items-center rounded-lg border w-20">
-
+                            <div className="inline-flex h-11 w-20 items-center rounded-lg border">
                                 <Input
                                     type="number"
                                     min={1}
                                     value={quantity}
                                     onChange={(e) => {
                                         const value = e.target.value;
-                                        setQuantity(value === '' ? '' : Math.max(1, Number(value)));
+                                        setQuantity(
+                                            value === ''
+                                                ? ''
+                                                : Math.max(1, Number(value)),
+                                        );
                                     }}
                                     onBlur={() => {
-                                        if (!quantity || quantity < 1) setQuantity(1);
+                                        if (!quantity || quantity < 1)
+                                            setQuantity(1);
                                     }}
                                     className="h-10 w-14 border-0 p-0 text-center text-sm font-semibold shadow-none focus-visible:ring-0"
                                 />

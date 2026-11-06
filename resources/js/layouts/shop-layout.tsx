@@ -272,10 +272,10 @@ export default function ShopLayout({ children }: PropsWithChildren) {
                                                 {liveResults.map((product) => {
                                                     const oldPriceNum =
                                                         product.old_price !==
-                                                            null
+                                                        null
                                                             ? Number(
-                                                                product.old_price,
-                                                            )
+                                                                  product.old_price,
+                                                              )
                                                             : null;
                                                     const newPriceNum = Number(
                                                         product.new_price,
@@ -283,7 +283,7 @@ export default function ShopLayout({ children }: PropsWithChildren) {
                                                     const hasDiscount =
                                                         oldPriceNum !== null &&
                                                         oldPriceNum >
-                                                        newPriceNum;
+                                                            newPriceNum;
                                                     const productUrl = `/products/${product.slug}`;
 
                                                     return (
@@ -352,7 +352,7 @@ export default function ShopLayout({ children }: PropsWithChildren) {
                                                                 </span>
                                                                 {hasDiscount &&
                                                                     oldPriceNum !==
-                                                                    null && (
+                                                                        null && (
                                                                         <span className="block text-[11px] text-muted-foreground line-through">
                                                                             $
                                                                             {oldPriceNum.toFixed(
@@ -684,11 +684,13 @@ export default function ShopLayout({ children }: PropsWithChildren) {
                     {/* Bottom Copyright and Trust Badges */}
                     <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
                         <div>
-                            &copy; {' '}
+                            &copy;{' '}
                             <span className="font-semibold text-foreground">
                                 Bangla Puzzle Mart
                             </span>
-                            {'  '}{new Date().getFullYear()}{'  '}
+                            {'  '}
+                            {new Date().getFullYear()}
+                            {'  '}
                         </div>
 
                         <div className="flex flex-wrap items-center gap-2">

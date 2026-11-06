@@ -32,7 +32,6 @@ class ShopController extends Controller
                 return Inertia::render('shop/not-found', [
                     'type' => 'category',
                     'slug' => $queryCategorySlug,
-                    'message' => "No category found matching \"{$queryCategorySlug}\".",
                 ]);
             }
         }
@@ -49,7 +48,6 @@ class ShopController extends Controller
                 return Inertia::render('shop/not-found', [
                     'type' => 'subcategory',
                     'slug' => $querySubcategorySlug,
-                    'message' => "No subcategory found matching \"{$querySubcategorySlug}\".",
                 ]);
             }
         }
@@ -160,7 +158,6 @@ class ShopController extends Controller
             return Inertia::render('shop/not-found', [
                 'type' => 'category',
                 'slug' => $categorySlug,
-                'message' => "No category found matching \"{$categorySlug}\".",
             ])->toResponse($request)->setStatusCode(404);
         }
 
@@ -172,7 +169,6 @@ class ShopController extends Controller
         return Inertia::render('shop/not-found', [
             'type' => 'subcategory',
             'slug' => $subcategorySlug,
-            'message' => "No subcategory found matching \"{$subcategorySlug}\" in category \"{$category->name}\".",
         ])->toResponse($request)->setStatusCode(404);
     }
 
