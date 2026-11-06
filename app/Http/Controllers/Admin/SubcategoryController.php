@@ -20,7 +20,8 @@ class SubcategoryController extends Controller
         $subcategories = Subcategory::with('category:id,name,slug')
             ->withCount('products')
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         $categories = Category::orderBy('name')->get(['id', 'name']);
 

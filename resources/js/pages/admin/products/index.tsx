@@ -10,6 +10,7 @@ import {
 import { useRef, useState } from 'react';
 import ConfirmDeleteDialog from '@/components/confirm-delete-dialog';
 import InputError from '@/components/input-error';
+import Pagination from '@/components/pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,10 +32,10 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import type { Category, Product } from '@/types';
+import type { Category, PaginatedData, Product } from '@/types';
 
 type ProductsIndexProps = {
-    products: Product[];
+    products: PaginatedData<Product>;
     categories: Category[];
 };
 
@@ -253,11 +254,11 @@ export default function ProductsIndex({
                 <Card>
                     <CardHeader className="pb-3">
                         <CardTitle className="text-base font-semibold">
-                            All Products ({products.length})
+                            All Products ({products.total})
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        {products.length === 0 ? (
+                    <CardContent className="p-0 sm:p-6 sm:pt-0">
+                        {products.data.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-12 text-center">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
                                     <Package className="h-6 w-6" />
@@ -299,7 +300,7 @@ export default function ProductsIndex({
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y">
-                                        {products.map((product) => {
+                                        {products.data.map((product) => {
                                             const oldPrice =
                                                 product.old_price !== null
                                                     ? Number(product.old_price)
@@ -434,6 +435,7 @@ export default function ProductsIndex({
                             </div>
                         )}
                     </CardContent>
+                    <Pagination data={products} />
                 </Card>
             </div>
 

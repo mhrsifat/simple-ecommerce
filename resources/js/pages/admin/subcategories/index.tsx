@@ -3,6 +3,7 @@ import { Edit2, Layers, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import ConfirmDeleteDialog from '@/components/confirm-delete-dialog';
 import InputError from '@/components/input-error';
+import Pagination from '@/components/pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -24,10 +25,10 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import type { Category, Subcategory } from '@/types';
+import type { Category, PaginatedData, Subcategory } from '@/types';
 
 type SubcategoriesIndexProps = {
-    subcategories: Subcategory[];
+    subcategories: PaginatedData<Subcategory>;
     categories: Category[];
 };
 
@@ -136,11 +137,11 @@ export default function SubcategoriesIndex({
                 <Card>
                     <CardHeader className="pb-3">
                         <CardTitle className="text-base font-semibold">
-                            All Subcategories ({subcategories.length})
+                            All Subcategories ({subcategories.total})
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        {subcategories.length === 0 ? (
+                    <CardContent className="p-0 sm:p-6 sm:pt-0">
+                        {subcategories.data.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-12 text-center">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
                                     <Layers className="h-6 w-6" />
@@ -182,77 +183,81 @@ export default function SubcategoriesIndex({
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y">
-                                        {subcategories.map((subcategory) => (
-                                            <tr
-                                                key={subcategory.id}
-                                                className="transition-colors hover:bg-muted/30"
-                                            >
-                                                <td className="px-4 py-3 font-medium text-foreground">
-                                                    {subcategory.name}
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="text-xs"
-                                                    >
-                                                        {subcategory.category
-                                                            ?.name ?? '—'}
-                                                    </Badge>
-                                                </td>
-                                                <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="font-mono text-xs"
-                                                    >
-                                                        {subcategory.slug}
-                                                    </Badge>
-                                                </td>
-                                                <td className="px-4 py-3 text-center">
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="text-xs"
-                                                    >
-                                                        {subcategory.products_count ??
-                                                            0}
-                                                    </Badge>
-                                                </td>
-                                                <td className="px-4 py-3 text-right">
-                                                    <div className="flex items-center justify-end gap-1">
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                                                            onClick={() =>
-                                                                openEditDialog(
-                                                                    subcategory,
-                                                                )
-                                                            }
-                                                            aria-label="Edit subcategory"
+                                        {subcategories.data.map(
+                                            (subcategory) => (
+                                                <tr
+                                                    key={subcategory.id}
+                                                    className="transition-colors hover:bg-muted/30"
+                                                >
+                                                    <td className="px-4 py-3 font-medium text-foreground">
+                                                        {subcategory.name}
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="text-xs"
                                                         >
-                                                            <Edit2 className="h-4 w-4" />
-                                                        </Button>
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            className="h-8 w-8 text-destructive hover:bg-destructive/10"
-                                                            onClick={() =>
-                                                                confirmDelete(
-                                                                    subcategory,
-                                                                )
-                                                            }
-                                                            aria-label="Delete subcategory"
+                                                            {subcategory
+                                                                .category
+                                                                ?.name ?? '—'}
+                                                        </Badge>
+                                                    </td>
+                                                    <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
+                                                        <Badge
+                                                            variant="secondary"
+                                                            className="font-mono text-xs"
                                                         >
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </Button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                            {subcategory.slug}
+                                                        </Badge>
+                                                    </td>
+                                                    <td className="px-4 py-3 text-center">
+                                                        <Badge
+                                                            variant="secondary"
+                                                            className="text-xs"
+                                                        >
+                                                            {subcategory.products_count ??
+                                                                0}
+                                                        </Badge>
+                                                    </td>
+                                                    <td className="px-4 py-3 text-right">
+                                                        <div className="flex items-center justify-end gap-1">
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                                                                onClick={() =>
+                                                                    openEditDialog(
+                                                                        subcategory,
+                                                                    )
+                                                                }
+                                                                aria-label="Edit subcategory"
+                                                            >
+                                                                <Edit2 className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                                                                onClick={() =>
+                                                                    confirmDelete(
+                                                                        subcategory,
+                                                                    )
+                                                                }
+                                                                aria-label="Delete subcategory"
+                                                            >
+                                                                <Trash2 className="h-4 w-4" />
+                                                            </Button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ),
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         )}
                     </CardContent>
+                    <Pagination data={subcategories} />
                 </Card>
             </div>
 

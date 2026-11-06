@@ -28,7 +28,8 @@ class ProductController extends Controller
             'subcategory:id,name,slug',
         ])
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         $categories = Category::with('subcategories:id,category_id,name')
             ->orderBy('name')

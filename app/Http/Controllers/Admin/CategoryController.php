@@ -18,7 +18,8 @@ class CategoryController extends Controller
     {
         $categories = Category::withCount(['subcategories', 'products'])
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('admin/categories/index', [
             'categories' => $categories,

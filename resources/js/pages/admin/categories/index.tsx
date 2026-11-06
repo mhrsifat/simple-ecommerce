@@ -3,6 +3,7 @@ import { Edit2, FolderTree, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import ConfirmDeleteDialog from '@/components/confirm-delete-dialog';
 import InputError from '@/components/input-error';
+import Pagination from '@/components/pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,10 +18,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import type { Category } from '@/types';
+import type { Category, PaginatedData } from '@/types';
 
 type CategoriesIndexProps = {
-    categories: Category[];
+    categories: PaginatedData<Category>;
 };
 
 export default function CategoriesIndex({ categories }: CategoriesIndexProps) {
@@ -120,11 +121,11 @@ export default function CategoriesIndex({ categories }: CategoriesIndexProps) {
                 <Card>
                     <CardHeader className="pb-3">
                         <CardTitle className="text-base font-semibold">
-                            All Categories ({categories.length})
+                            All Categories ({categories.total})
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        {categories.length === 0 ? (
+                    <CardContent className="p-0 sm:p-6 sm:pt-0">
+                        {categories.data.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-12 text-center">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
                                     <FolderTree className="h-6 w-6" />
@@ -166,7 +167,7 @@ export default function CategoriesIndex({ categories }: CategoriesIndexProps) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y">
-                                        {categories.map((category) => (
+                                        {categories.data.map((category) => (
                                             <tr
                                                 key={category.id}
                                                 className="transition-colors hover:bg-muted/30"
@@ -237,6 +238,7 @@ export default function CategoriesIndex({ categories }: CategoriesIndexProps) {
                             </div>
                         )}
                     </CardContent>
+                    <Pagination data={categories} />
                 </Card>
             </div>
 
