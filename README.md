@@ -84,9 +84,9 @@ php artisan migrate:fresh --seed
 
 #### Seeded Credentials
 
-| Role         | Email                       | Password   |
-| :----------- | :-------------------------- | :--------- |
-| **Admin**    | `admin@banglapuzzle.com`    | `password` |
+| Role      | Email                    | Password   |
+| :-------- | :----------------------- | :--------- |
+| **Admin** | `admin@banglapuzzle.com` | `password` |
 
 ### 7. Install & Build Frontend Assets
 
