@@ -432,7 +432,7 @@ export default function ShopLayout({ children }: PropsWithChildren) {
                                 asChild
                                 variant="outline"
                                 size="sm"
-                                className="gap-1.5 text-xs font-semibold"
+                                className="hidden sm:inline-flex gap-1.5 text-xs font-semibold"
                             >
                                 <Link href="/login">
                                     <LogIn className="h-4 w-4" />
