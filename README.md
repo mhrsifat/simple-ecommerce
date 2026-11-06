@@ -87,7 +87,6 @@ php artisan migrate:fresh --seed
 | Role         | Email                       | Password   |
 | :----------- | :-------------------------- | :--------- |
 | **Admin**    | `admin@banglapuzzle.com`    | `password` |
-| **Customer** | `customer@banglapuzzle.com` | `password` |
 
 ### 7. Install & Build Frontend Assets
 
@@ -139,7 +138,7 @@ composer ci:check
 2. Click **+ Add Site** $\rightarrow$ Select **Create a PHP Site** or **Laravel Site**.
     - **Application**: `Laravel` (or `Generic` with root set to `/public`)
     - **Domain Name**: e.g., `simple-ecommerce.mhrsifat.app`
-    - **PHP Version**: `PHP 8.3` or `PHP 8.4`
+    - **PHP Version**: `PHP 8.3` or `PHP 8.4` or `PHP 8.5`
     - **Site User**: e.g., `mhrsifat-simple-ecommerce`
     - **Site User Password**: Save the generated password securely.
 3. Note the site root path (e.g., `htdocs/simple-ecommerce.mhrsifat.app`).
