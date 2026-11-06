@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'welcome')->name('home');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-});
+// Public Storefront Routes
+Route::get('/', [ShopController::class, 'index'])->name('home');
+Route::get('/search/live', [ShopController::class, 'liveSearch'])->name('search.live');
+Route::get('/categories/{category:slug}/{subcategory:slug?}', [ShopController::class, 'index'])
+    ->scopeBindings()
+    ->name('categories.show')
+    ->missing(ShopController::categoryNotFound(...));
+Route::get('/products/{slug}', [ShopController::class, 'show'])->name('products.show');
 
 require __DIR__.'/settings.php';
+require __DIR__.'/admin.php';

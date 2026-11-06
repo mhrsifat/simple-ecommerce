@@ -32,6 +32,23 @@ class Category extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'path',
+    ];
+
+    /**
+     * Get the relative canonical URL path for the category.
+     */
+    public function getPathAttribute(): string
+    {
+        return "/categories/{$this->slug}";
+    }
+
+    /**
      * Get the subcategories for the category.
      *
      * @return HasMany<Subcategory, $this>

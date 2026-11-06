@@ -1,5 +1,5 @@
 import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut, Moon, Sun } from 'lucide-react';
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -7,9 +7,9 @@ import {
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
+import { useAppearance } from '@/hooks/use-appearance';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
-import { edit } from '@/routes/profile';
 import type { User } from '@/types';
 
 type Props = {
@@ -18,10 +18,15 @@ type Props = {
 
 export function UserMenuContent({ user }: Props) {
     const cleanup = useMobileNavigation();
+    const { resolvedAppearance, updateAppearance } = useAppearance();
 
     const handleLogout = () => {
         cleanup();
         router.flushAll();
+    };
+
+    const toggleTheme = () => {
+        updateAppearance(resolvedAppearance === 'dark' ? 'light' : 'dark');
     };
 
     return (
@@ -33,16 +38,21 @@ export function UserMenuContent({ user }: Props) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-                <DropdownMenuItem asChild>
-                    <Link
-                        className="block w-full cursor-pointer"
-                        href={edit()}
-                        prefetch
-                        onClick={cleanup}
-                    >
-                        <Settings className="mr-2" />
-                        Settings
-                    </Link>
+                <DropdownMenuItem
+                    onClick={toggleTheme}
+                    className="cursor-pointer"
+                >
+                    {resolvedAppearance === 'dark' ? (
+                        <>
+                            <Sun className="mr-2 h-4 w-4 text-foreground" />
+                            <span>Light Mode</span>
+                        </>
+                    ) : (
+                        <>
+                            <Moon className="mr-2 h-4 w-4 text-slate-700 dark:text-slate-300" />
+                            <span>Dark Mode</span>
+                        </>
+                    )}
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -54,7 +64,7 @@ export function UserMenuContent({ user }: Props) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut className="mr-2" />
+                    <LogOut className="mr-2 h-4 w-4" />
                     Log out
                 </Link>
             </DropdownMenuItem>

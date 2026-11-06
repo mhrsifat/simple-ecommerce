@@ -6,20 +6,23 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Bangla Puzzle Mart';
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
             case name === 'welcome':
+            case name.startsWith('shop/'):
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
                 return [AppLayout, SettingsLayout];
-            default:
+            case name.startsWith('admin/'):
                 return AppLayout;
+            default:
+                return null;
         }
     },
     strictMode: true,

@@ -54,6 +54,7 @@ class Product extends Model
     protected $appends = [
         'image_url',
         'discount_percentage',
+        'path',
     ];
 
     /**
@@ -111,5 +112,13 @@ class Product extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Get the relative canonical URL path for the product.
+     */
+    public function getPathAttribute(): string
+    {
+        return "/products/{$this->slug}";
     }
 }

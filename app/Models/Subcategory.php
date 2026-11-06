@@ -35,6 +35,34 @@ class Subcategory extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'path',
+    ];
+
+    /**
+     * Get the relative canonical URL path for the subcategory.
+     */
+    public function getPathAttribute(): string
+    {
+        $categorySlug = $this->category?->slug;
+
+        if (! $categorySlug) {
+            $this->loadMissing('category:id,slug');
+            $categorySlug = $this->category?->slug;
+        }
+
+        if ($categorySlug) {
+            return "/categories/{$categorySlug}/{$this->slug}";
+        }
+
+        return "/categories/{$this->slug}";
+    }
+
+    /**
      * Get the parent category.
      *
      * @return BelongsTo<Category, $this>

@@ -19,9 +19,8 @@ class UserSeeder extends Seeder
         // Reset cached roles and permissions
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        // 1. Roles & Permissions Setup
+        // Roles & Permissions Setup
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        $customerRole = Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
 
         $permissions = [
             'manage categories',
@@ -35,11 +34,11 @@ class UserSeeder extends Seeder
 
         $adminRole->syncPermissions($permissions);
 
-        // 2. Admin User
+        // Admin User
         $adminUser = User::firstOrCreate(
-            ['email' => 'admin@admin.com'],
+            ['email' => 'admin@banglapuzzle.com'],
             [
-                'name' => 'Admin User',
+                'name' => 'Bangla Puzzle Admin',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ]
@@ -47,20 +46,6 @@ class UserSeeder extends Seeder
 
         if (! $adminUser->hasRole('admin')) {
             $adminUser->assignRole($adminRole);
-        }
-
-        // 3. Customer User
-        $customerUser = User::firstOrCreate(
-            ['email' => 'customer@banglapuzzle.com'],
-            [
-                'name' => 'Customer User',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]
-        );
-
-        if (! $customerUser->hasRole('customer')) {
-            $customerUser->assignRole($customerRole);
         }
     }
 }
